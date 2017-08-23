@@ -40,12 +40,12 @@ try {
 
     $result = $IndexController->main(dirname(__FILE__).'/Resources/Files/Libro2.xls');
 
-    /*
+
     echo "<pre>";
     print_r($result);
     echo "</pre>";
     die;
-    */
+
 
     $response = new Response(ob_get_clean());
     $response->setContent($result);

@@ -15,6 +15,7 @@ class IndexController
     private $sheetData;
 
     /**
+     * Lee un archivo excel, obtiene la hoja activa, y llama al metodo getTablas
      * @param $fileName
      * @return array
      */
@@ -27,15 +28,41 @@ class IndexController
 
         $this->sheetData = $this->objExcel->getActiveSheet()->toArray(null, true, true, true);
 
-        return json_encode($this->sheetData);
+        return $this->getTablas();
+
     }
 
-    /*
-    public function __toString()
+
+    /**
+     * Retorna en formato de tablas html
+     * @return string
+     */
+    private function getTablas()
     {
-        return serialize($this);
+
+        $cadena = "";
+
+        foreach ($this->sheetData as $fila) {
+
+            /*
+            var_dump($fila);
+            die;
+            */
+
+            $cadena = $cadena."<tr>";
+            $renglon = "";
+            foreach ($fila as $key => $value) {
+                $renglon = $renglon."<td>".$value."</td>";
+            }
+            $cadena = $cadena.$renglon."</tr>";
+
+        }
+
+        /**
+         * @todo ejemplo, conviene utilizar un motor de template (twig) y hojas de estilo (css) en implementacion real
+         */
+        return ("<table border='1'>".$cadena."</table>");
 
     }
-    */
 
 }
